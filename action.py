@@ -42,7 +42,7 @@ class Action():
                 z += math.copysign(math.fabs(vec.z) - self.THRESHOLD, vec.z)/7
             print "x: %.3f" % x
             print "z: %.3f" % z
-            self.m.move(x,z) 
+            self.m.move(int(x),int(z)) 
             vec = f.frontmost.tip_position
              
     def click(self, vec):
