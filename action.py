@@ -18,7 +18,7 @@ class Action():
     def check(self, vec):
         x = math.fabs(vec.x)
         z = math.fabs(vec.z)
-        if ( (x >= THRESHOLD || z >= THRESHOLD) && x <= MAXIMUM && z <= MAXIMUM ): 
+        if ( (x >= THRESHOLD or z >= THRESHOLD) and x <= MAXIMUM and z <= MAXIMUM ): 
             return math.atan(z/x)
         else:
             return null
