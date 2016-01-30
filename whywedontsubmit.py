@@ -18,10 +18,15 @@ class RudeListener(Leap.Listener):
 
 
     def on_frame(self, controller):
+    	# print "all fingers: " +  controller.frame().fingers.get_iterator()
+    	# print "extended: " + controller.frame().fingers.extended()
+    	# print "middle: " + controller.frame().fingers.extended().finger_type(Leap.Finger.TYPE_MIDDLE)
         fingers = controller.frame().fingers.extended().finger_type(Leap.Finger.TYPE_MIDDLE)
         if not fingers.is_empty:
-        	print "has fingers"
-        	print "should be happening"
+        	# print "has fingers"
+        	# print "should be happening"
+        	# for finger in fingers:
+        	# 	print finger.type
         	with open("imnotsurehowthisgotintherepo.txt") as f:
     			for line in f:
     				print line
@@ -33,6 +38,7 @@ def main():
     controller.add_listener(listener)
 
     # Keep this process running until Enter is pressed
+    time.sleep(1)
     print "Press Enter to quit..."
     try:
         sys.stdin.readline()
