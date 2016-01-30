@@ -11,7 +11,6 @@ class ActionListener(Leap.Listener):
 
     AVG = 10
     count = 0
-    action = Action()
 
     def on_init(self, controller):
         print "Initialized"
@@ -20,6 +19,7 @@ class ActionListener(Leap.Listener):
         print "Connected" 
 
     def on_frame(self, controller):
+        action = Action(controller)
         if (self.count == self.AVG):
             valid_fingers = 0
             average = Leap.Vector()
@@ -31,9 +31,9 @@ class ActionListener(Leap.Listener):
                     valid_fingers += 1
                  
             average /= valid_fingers
-            if not valid_fingers == 0:
-                self.action.check(average)
-            
+            if not valid_fingers == 0:              
+                print action.check(average)
+                
             count = 0
               
         else:
