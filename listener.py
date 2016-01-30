@@ -10,14 +10,14 @@ import math
 
 class ActionListener(Leap.Listener):
 
-    debug = False
+    debug = True
     SCROLL_THRESHOLD = 5
     AVG = 10
     count = 0
     action = None
     use_vertscroll = True
     roll_offset = math.pi/2 - .8
-    vert_scroll_limit = pi/8
+    vert_scroll_limit = math.pi/8
     
     def on_init(self, controller):
         controller.set_policy_flags(Leap.Controller.POLICY_BACKGROUND_FRAMES)
@@ -33,29 +33,32 @@ class ActionListener(Leap.Listener):
             average = Leap.Vector()
 
             for i in range(0, self.AVG - 1):
-                index_finger_list = controller.frame(i).fingers.finger_type(Finger.TYPE_INDEX)
-                index_finger = index_finger_list[0]
+                index_finger = controller.frame(i).fingers.finger_type(Finger.TYPE_INDEX)[0]
+#                index_finger = indexFingerList[0]
                  
-                pinky_finger_list = controller.frame(i).fingers.finger_type(Finger.TYPE_PINKY)
-                pinky_finger = pinky_finger_list[0]
-                 
-                if(not pinky_finger_list.is_empty and pinky_finger.direction.z < 0):
+                pinky_finger = controller.frame(i).fingers.finger_type(Finger.TYPE_PINKY)[0]
+                #pinky_finger = pinky_fingerList[0]                 
+
+                if(not pinky_finger.is_valid and pinky_finger.direction.z < 0):
                     self.action.click(index_finger)
                  
                 else:
                      self.action.unclick(index_finger)
                  
-                if (not index_finger_list.is_empty and index_finger.direction.z < 0):
+                if (index_finger.is_valid and index_finger.direction.z < 0):
                     average += index_finger.tip_position
                     valid_fingers += 1
+
                 if(self.use_vertscroll): 
-                    if (prev_finger.is_valid and finger.is_valid):
-                        diff = prev_finger.tip_position.y - finger.tip_position.y
-                        print diff
+                    prev_finger = controller.frame(i+1).fingers.finger_type(Finger.TYPE_INDEX)[0]
+                    if (prev_finger.is_valid and index_finger.is_valid):
+                        diff = prev_finger.tip_position.y - index_finger.tip_position.y
+                       # print diff
        
                         if ( math.fabs(diff) > self.SCROLL_THRESHOLD ):
                             self.action.scroll(math.copysign(1,-diff))
-                elif finger.is_valid and finger.type == Leap.Finger.TYPE_INDEX:
+
+                elif index_finger.is_valid and index_finger.type == Leap.Finger.TYPE_INDEX:
                     roll = finger.direction.roll + self.roll_offset
                     if math.fabs(roll) > self.vert_scroll_limit:
                         self.action.scroll(self.vert_scroll_limit-roll)
