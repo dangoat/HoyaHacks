@@ -15,7 +15,7 @@ class ActionListener(Leap.Listener):
     AVG = 10
     count = 0
     action = None
-    use_vertscroll = true
+    use_vertscroll = True
     roll_offset = math.pi/2 - .8
     vert_scroll_limit = pi/8
     
