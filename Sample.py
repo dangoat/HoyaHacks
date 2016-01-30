@@ -6,8 +6,10 @@
 # between Leap Motion and you, your company or other organization.             #
 ################################################################################
 
-import Leap, sys, thread, time
+import sys, thread, time
 sys.path.append("/Users/kylem/Documents/LeapSDK/lib")
+
+import Leap
 
 
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture
