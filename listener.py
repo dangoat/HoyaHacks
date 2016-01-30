@@ -21,17 +21,19 @@ class ActionListener(Leap.Listener):
 
     def on_frame(self, controller):
         if (count == AVG):
+            valid_fingers = 0
             average = Leap.Vector()
-            if (!frame.fingers.is_empty()):
-                valid_fingers = 0
 
-                for i in range(0,AVG):
-                    finger = controller.frame(i).fingers.frontmost
-                    if (finger.is_valid):
-                        average += finger.tip_position
-                        valid_fingers++
+            for i in range(0,AVG-1):
+                finger = controller.frame(i).fingers.frontmost
+                if (finger.is_valid):
+                    average += finger.tip_position
+                    valid_fingers++
                  
                 average /= valid_fingers
+                count = 0
+                action.check(average)
                         
         else:
             count++
+
