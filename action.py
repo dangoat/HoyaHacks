@@ -12,6 +12,7 @@ class Action():
 
     THRESHOLD = 10
     MAXIMUM = 150
+    FACTOR = 6
     controller = None
     m = PyMouse()
 
@@ -35,10 +36,10 @@ class Action():
         # print vec.x > 10
         # print -10 > vec.z
         # print vec.z > 10
-        if ( -10 > vec.x or vec.x > 10):
-            x += math.copysign(math.fabs(vec.x) - self.THRESHOLD, vec.x)/7
-        if ( -10 > vec.z or vec.z > 10):
-            z += math.copysign(math.fabs(vec.z) - self.THRESHOLD, vec.z)/7
+        if ( -self.THRESHOLD > vec.x or vec.x > self.THRESHOLD):
+            x += math.copysign(math.fabs(vec.x) - self.THRESHOLD, vec.x)/self.FACTOR
+        if ( -self.THRESHOLD > vec.z or vec.z > self.THRESHOLD):
+            z += math.copysign(math.fabs(vec.z) - self.THRESHOLD, vec.z)/self.FACTOR
         x_dim, y_dim = self.m.screen_size()
         if(x < 0): x = 0
         if(z < 0): z = 0
