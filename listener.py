@@ -3,7 +3,6 @@ src_dir = os.path.dirname(inspect.getfile(inspect.currentframe()))
 arch_dir = '../lib/x64' if sys.maxsize > 2 ** 32 else '../lib/x86'
 sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
 sys.path.append("/Users/kylem/Documents/LeapSDK/lib")
-
 import Leap
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture, Finger
 from action import Action
@@ -18,7 +17,7 @@ class ActionListener(Leap.Listener):
     action = None
     
     def on_init(self, controller):
-		controller.set_policy_flags(Leap.Controller.POLICY_BACKGROUND_FRAMES)
+        controller.set_policy_flags(Leap.Controller.POLICY_BACKGROUND_FRAMES)
         self.action = Action(controller)
         print "Initialized"
 
