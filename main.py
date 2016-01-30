@@ -9,7 +9,7 @@ from listener import ActionListener
 
 def main():
     controller = Leap.Controller()
-    listener = SampleListener()
+    listener = ActionListener()
 
     controller.add_listener(listener)
 

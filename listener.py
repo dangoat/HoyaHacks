@@ -11,10 +11,7 @@ class ActionListener(Leap.Listener):
 
     AVG = 10
     count = 0
-    Action action
-
-    def __init__(self, a):
-        self.action = a
+    action = Action()
 
     def on_init(self, controller):
         print "Initialized"
@@ -25,14 +22,15 @@ class ActionListener(Leap.Listener):
     def on_frame(self, controller):
         if (count == AVG):
             average = Leap.Vector()
-            frame = controller.frame()
             if (!frame.fingers.is_empty()):
                 valid_fingers = 0
-                finger = frame.fingers.frontmost
+
                 for i in range(0,AVG):
+                    finger = controller.frame(i).fingers.frontmost
                     if (finger.is_valid):
                         average += finger.tip_position
                         valid_fingers++
+                 
                 average /= valid_fingers
                         
         else:
