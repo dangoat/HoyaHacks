@@ -28,9 +28,11 @@ class ActionListener(Leap.Listener):
 
             for i in range(0, self.AVG - 1):
                 finger = controller.frame(i).fingers.frontmost
+                
                 pointed_fingers = controller.frame(i).fingers.extended()
+                
                 if(pointed_fingers.rightmost.type == Finger.TYPE_PINKY):
-                    self.action.click(finger)
+                    self.action.singleclick(finger)
                 
                 else:
                     self.action.unclick(finger)
