@@ -33,9 +33,7 @@ class ActionListener(Leap.Listener):
                  
             average /= valid_fingers
             if not valid_fingers == 0:              
-                print self.action.check(average)
-                
-            action.mouse(average)
+                self.action.mouse(average, finger)
             count = 0
               
         else:

@@ -26,17 +26,19 @@ class Action():
         else:
             return False
             
-    def mouse(self, vec):
-        while (check(vec)):
+    def mouse(self, vec, f):
+        while (self.check(vec)):
             # move mouse
-            x,z = m.position()
-            if (vec.x < 0):
-                x -= 5
-            else:
-                x += 5
-            if (vec.z < 0):
-                z -= 5
-            else:
-                z += 5
-            m.move(x,z)
-            vec = controller.frame.fingers.frontmost.tip_position 
+            x,z = self.m.position()
+            
+            print -10 > vec.x
+            print vec.x > 10
+            print -10 > vec.z
+            print vec.z > 10
+            if ( -10 > vec.x or vec.x > 10):
+                x += math.copysign(5, vec.x)
+            if ( -10 > vec.z or vec.z > 10):
+                z += math.copysign(5, vec.z)
+            self.m.move(x,z) 
+            vec = f.frontmost.tip_position
+             
