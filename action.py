@@ -28,22 +28,27 @@ class Action():
             return False
             
     def mouse(self, vec, f):
-        while (self.check(vec)):
-            # move mouse
-            x,z = self.m.position()
-            
-            # print -10 > vec.x
-            # print vec.x > 10
-            # print -10 > vec.z
-            # print vec.z > 10
-            if ( -10 > vec.x or vec.x > 10):
-                x += math.copysign(math.fabs(vec.x) - self.THRESHOLD, vec.x)/7
-            if ( -10 > vec.z or vec.z > 10):
-                z += math.copysign(math.fabs(vec.z) - self.THRESHOLD, vec.z)/7
-            print "x: %.3f" % x
-            print "z: %.3f" % z
-            self.m.move(int(x),int(z)) 
-            vec = f.frontmost.tip_position
+        # move mouse
+        x,z = self.m.position()
+        
+        # print -10 > vec.x
+        # print vec.x > 10
+        # print -10 > vec.z
+        # print vec.z > 10
+        if ( -10 > vec.x or vec.x > 10):
+            x += math.copysign(math.fabs(vec.x) - self.THRESHOLD, vec.x)/7
+        if ( -10 > vec.z or vec.z > 10):
+            z += math.copysign(math.fabs(vec.z) - self.THRESHOLD, vec.z)/7
+        x_dim, y_dim = self.m.screen_size()
+        if(x < 0): x = 0
+        if(z < 0): z = 0
+        if(x > x_dim): x = x_dim
+        if(z > y_dim): z = y_dim
+        print "x: %.3f" % x
+        print "z: %.3f" % z
+        self.m.move(int(x),int(z)) 
+        if f.type == Leap.Finger.TYPE_INDEX:
+            vec = f.tip_position
              
     def click(self, vec):
         x, z = self.m.position()
