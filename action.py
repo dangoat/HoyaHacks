@@ -10,7 +10,7 @@ from pymouse import PyMouse
 
 class Action():
 
-    THRESHOLD = 30
+    THRESHOLD = 10
     MAXIMUM = 150
     controller = None
     m = PyMouse()
@@ -32,14 +32,16 @@ class Action():
             # move mouse
             x,z = self.m.position()
             
-            print -10 > vec.x
-            print vec.x > 10
-            print -10 > vec.z
-            print vec.z > 10
+            # print -10 > vec.x
+            # print vec.x > 10
+            # print -10 > vec.z
+            # print vec.z > 10
             if ( -10 > vec.x or vec.x > 10):
-                x += math.copysign(5, vec.x)
+                x += math.copysign(math.fabs(vec.x) - self.THRESHOLD, vec.x)/7
             if ( -10 > vec.z or vec.z > 10):
-                z += math.copysign(5, vec.z)
+                z += math.copysign(math.fabs(vec.z) - self.THRESHOLD, vec.z)/7
+            print "x: %.3f" % x
+            print "z: %.3f" % z
             self.m.move(x,z) 
             vec = f.frontmost.tip_position
              
