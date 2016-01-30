@@ -15,6 +15,7 @@ class ActionListener(Leap.Listener):
     action = None
     
     def on_init(self, controller):
+        controller.set_policy_flags(Leap.Controller.POLICY_BACKGROUND_FRAMES)
         self.action = Action(controller)
         print "Initialized"
 
