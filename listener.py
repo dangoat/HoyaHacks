@@ -18,6 +18,8 @@ class ActionListener(Leap.Listener):
     use_vertscroll = True
     roll_offset = math.pi/2 - .8
     vert_scroll_limit = math.pi/8
+    last_click = 0
+    clicked = False
     
     def on_init(self, controller):
         controller.set_policy_flags(Leap.Controller.POLICY_BACKGROUND_FRAMES)
@@ -39,11 +41,18 @@ class ActionListener(Leap.Listener):
                 pinky_finger = controller.frame(i).fingers.finger_type(Finger.TYPE_PINKY)[0]
                 #pinky_finger = pinky_fingerList[0]                 
 
-                if(not pinky_finger.is_valid and pinky_finger.direction.z < 0):
-                    self.action.click(index_finger)
-                 
-                else:
-                     self.action.unclick(index_finger)
+                if(pinky_finger.is_valid and pinky_finger.direction.z < 0):
+                    if(time.time() - self.last_click > 1):
+                        print "last %d" , self.last_click
+                        print "this %d" , time.time()
+                        self.action.click(index_finger)
+                        self.clicked = True
+                        self.last_click = time.time()
+                        
+                if(not pinky_finger.is_valid or not pinky_finger.direction.z < 0):
+                    if(self.clicked == True):
+                        self.clicked = False
+                        self.action.unclick(index_finger)        
                  
                 if (index_finger.is_valid and index_finger.direction.z < 0):
                     average += index_finger.tip_position
