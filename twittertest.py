@@ -30,8 +30,8 @@ class SampleListener(Leap.Listener):
                 api = TwitterAPI(o.consumer_key,
                     o.consumer_secret,
                     auth_type='oAuth2')
-                t = api.request('trends/available')
-                print t.text
+                t = api.request('trends/place', {'id':'1'})
+                print t.json()
 
 def main():
     controller = Leap.Controller()
