@@ -45,3 +45,10 @@ class Action():
             self.m.move(x,z) 
             vec = f.frontmost.tip_position
              
+    def click(self, vec):
+        x, z = self.m.position()
+        self.m.press(x, z, LEFT)
+        
+    def unclick(self, vec):
+        x, z = self.m.position()
+        self.m.release(x, z, LEFT)
