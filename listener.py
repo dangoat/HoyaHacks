@@ -30,10 +30,10 @@ class ActionListener(Leap.Listener):
                     average += finger.tip_position
                     valid_fingers++
                  
-                average /= valid_fingers
-                count = 0
-                action.check(average)
-                        
+            average /= valid_fingers
+            count = 0
+            action.check(average)
+                    
         else:
             count++
 
