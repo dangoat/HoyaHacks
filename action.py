@@ -61,3 +61,5 @@ class Action():
         x, z = self.m.position()
         self.m.click(x, z, 1)
            
+    def scroll(self, step):
+        self.m.scroll(vertical=step)
