@@ -45,8 +45,6 @@ class Action():
         if(z < 0): z = 0
         if(x > x_dim): x = x_dim
         if(z > y_dim): z = y_dim
-        print "x: %.3f" % x
-        print "z: %.3f" % z
         self.m.move(int(x),int(z)) 
         if f.type == Leap.Finger.TYPE_INDEX:
             vec = f.tip_position
