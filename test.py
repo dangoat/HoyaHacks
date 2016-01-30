@@ -27,6 +27,8 @@ def main():
     controller = Leap.Controller()
     listener = SampleListener()
 
+    controller.add_listener(listener)
+
     # Keep this process running until Enter is pressed
     print "Press Enter to quit..."
     try:
