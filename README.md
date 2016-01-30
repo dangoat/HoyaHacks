@@ -6,5 +6,5 @@ Made in Python using the Leap Motion API
 ##Hack developers
 * [Ross Baehr](https://github.com/rbaehr/)
 * [Kyle Montemayor](https://github.com/kmonte/)
-* [Dan Evans](https://github.com/username/) 
+* [Dan Evans](https://github.com/dangoat/) 
 * [Eric Appelbaum](https://github.com/erabaum/)
