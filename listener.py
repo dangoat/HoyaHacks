@@ -7,15 +7,18 @@ sys.path.append("/Users/kylem/Documents/LeapSDK/lib")
 import Leap
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture, Finger
 from action import Action
+import math
 
 class ActionListener(Leap.Listener):
 
+    debug = False
+    SCROLL_THRESHOLD = 5
     AVG = 10
     count = 0
     action = None
     
     def on_init(self, controller):
-        controller.set_policy_flags(Leap.Controller.POLICY_BACKGROUND_FRAMES)
+		controller.set_policy_flags(Leap.Controller.POLICY_BACKGROUND_FRAMES)
         self.action = Action(controller)
         print "Initialized"
 
@@ -37,12 +40,23 @@ class ActionListener(Leap.Listener):
                 
                 else:
                     self.action.unclick(finger)
+
+                
+                prev_finger = controller.frame(i+1).fingers.frontmost 
+                if (prev_finger.is_valid and finger.is_valid):
+                    diff = prev_finger.tip_position.y - finger.tip_position.y
+                    print diff
+   
+                    if ( math.fabs(diff) > self.SCROLL_THRESHOLD ):
+                        self.action.scroll(math.copysign(1,-diff))   
                 
                 if (finger.is_valid):
                     average += finger.tip_position
                     valid_fingers += 1
                  
             average /= valid_fingers
+            if ( self.debug ):
+                print "x: {0:.3f} y: {1:.3f} z: {2:.3f}".format(average.x, average.y, average.z)
             if not valid_fingers == 0:              
                 self.action.mouse(average, finger)
             count = 0
