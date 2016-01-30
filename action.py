@@ -53,8 +53,13 @@ class Action():
              
     def click(self, vec):
         x, z = self.m.position()
-        self.m.press(x, z, LEFT)
+        self.m.press(x, z)
         
     def unclick(self, vec):
         x, z = self.m.position()
-        self.m.release(x, z, LEFT)
+        self.m.release(x, z)
+
+    def singleclick(self, vec):
+        x, z = self.m.position()
+        self.m.click(x, z, 1)
+           

@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
 sys.path.append("/Users/kylem/Documents/LeapSDK/lib")
 
 import Leap
-from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture
+from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture, Finger
 from action import Action
 
 class ActionListener(Leap.Listener):
