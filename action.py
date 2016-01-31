@@ -20,7 +20,8 @@ class Action():
 
     def __init__(self, c):
        self.controller = c
-       self.x_res, self.y_res = self.m.screen_size()       
+       self.x_res, self.y_res = self.m.screen_size()
+       print "x_res: {0}  y_res: {1}".format(self.x_res, self.y_res)       
        
     def check(self, vec):
         x = math.fabs(vec.x)
@@ -61,7 +62,7 @@ class Action():
         #if (vec.y < 250 or vec.y > 50):
         y = (250 - vec.y) * (self.y_res / 200)
         y_move = int(y)# - y_cur
-        print "x_cur:  {0} x_move: {1} y_cur: {2} y_move: {3}".format(x_cur, x_move, y_cur, y_move)
+        #print "x_cur:  {0} x_move: {1} y_cur: {2} y_move: {3}".format(x_cur, x_move, y_cur, y_move)
         self.m.move(x_move, y_move)
                  
     def click(self, vec):
