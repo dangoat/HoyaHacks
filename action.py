@@ -48,7 +48,16 @@ class Action():
         self.m.move(int(x),int(z)) 
         if f.type == Leap.Finger.TYPE_INDEX:
             vec = f.tip_position
-             
+        
+    def point(self, vec, ang):
+        # scaling
+        x = vec.x
+        x += MAXIMUM
+        x = int(x * 6.4) #1920px / 300 units = 6.4
+        
+        y = vec.y
+        y = int(y) # add multiplier for 1080px
+                 
     def click(self, vec):
         x, z = self.m.position()
         self.m.press(x, z)
