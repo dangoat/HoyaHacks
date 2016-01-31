@@ -7,13 +7,16 @@ sys.path.append("/Users/kylem/Documents/LeapSDK/lib")
 import Leap
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture
 from listener import ActionListener
+from clicklistener import ClickListener
 
 def main():
     controller = Leap.Controller()
     listener = ActionListener()
-
+    c_listener = ClickListener()
+    
     controller.add_listener(listener)
-
+    controller.add_listener(c_listener)
+    
     # Keep this process running until Enter is pressed
     print "Press Enter to quit..."
     try:
