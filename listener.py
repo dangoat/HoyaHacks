@@ -43,14 +43,14 @@ class ActionListener(Leap.Listener):
                 #pinky_finger = pinky_fingerList[0]                 
  
                 if(pinky_finger.is_valid and pinky_finger.direction.z < 0):
-                    if(time.time() - self.last_click > 1):
+                    if(time.time() - self.last_click > .05):
                         print "last %d" , self.last_click
                         print "this %d" , time.time()
                         self.action.click(index_finger)
                         self.clicked = True
                         self.last_click = time.time()
                          
-                if(not pinky_finger.is_valid or not pinky_finger.direction.z < 0):
+                if(not pinky_finger.direction.z < 0):
                     if(self.clicked == True):
                         self.clicked = False
                         self.action.unclick(index_finger)        
