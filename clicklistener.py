@@ -20,9 +20,11 @@ class ClickListener(Leap.Listener):
         print "CL Connected"
     
     def on_frame(self, controller):
-        thumb = controller.frame(0).fingers.finger_type(Finger.TYPE_THUMB)[0]
-        index = controller.frame(0).fingers.finger_type(Finger.TYPE_INDEX)[0]
+        frame = controller.frame();
+        thumb = frame.fingers.finger_type(Finger.TYPE_THUMB)[0]
+        index = frame.fingers.finger_type(Finger.TYPE_INDEX)[0]
         
         if(thumb.direction.x < 0):
             print "click %d", time.time()
-            
+            time.sleep(1)
+        
