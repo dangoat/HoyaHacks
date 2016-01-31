@@ -4,6 +4,7 @@ arch_dir = '../lib/x64' if sys.maxsize > 2**32 else '../lib/x86'
 sys.path.insert(0, os.path.abspath(os.path.join(src_dir, arch_dir)))
 sys.path.append("/Users/kylem/Documents/LeapSDK/lib")
 
+from win32api import GetSystemMetrics
 import Leap
 from Leap import CircleGesture, KeyTapGesture, ScreenTapGesture, SwipeGesture
 from pymouse import PyMouse
@@ -13,12 +14,16 @@ class Action():
     THRESHOLD = 10
     MAXIMUM = 150
     FACTOR = 6
+    x_res = 0
+    y_res = 0
     controller = None
     m = PyMouse()
 
     def __init__(self, c):
-       self.controller = c 
-
+       self.controller = c
+       self.x_res = GetSystemMetrics(0)
+       self.y_res = GetSystemMetrics(1)
+       
     def check(self, vec):
         x = math.fabs(vec.x)
         z = math.fabs(vec.z)
@@ -50,15 +55,14 @@ class Action():
             vec = f.tip_position
         
     def point(self, vec):
-        x  = (vec.x + 150) * (x_res / 300)
-        y = (250 - vec.y) * (y_res / 200)
+        x  = (vec.x + 150) * (self.x_res / 300)
+        y = (250 - vec.y) * (self.y_res / 200)
         
-        x_cur = self.m.position().x
-        y_cur = self.m.position().y
+        x_cur, y_cur = self.m.position()
         
         x_move = x - x_cur
         y_move = y - y_cur
-        self.m.move(x_move,y_move)        
+        self.m.move(int(x_move),int(y_move))        
                  
     def click(self, vec):
         x, z = self.m.position()
