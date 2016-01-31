@@ -10,11 +10,11 @@ from pymouse import PyMouse
 
 class Action():
 
-    THRESHOLD = 10
+    THRESHOLD = 75
     MAXIMUM = 150
     FACTOR = 6
-    x_res = 0
-    y_res = 0
+    x_res = 1920
+    y_res = 1200
     controller = None
     m = PyMouse()
 
@@ -31,39 +31,38 @@ class Action():
         else:
             return False
             
-    def mouse(self, vec, f):
-        # move mouse
-        x,z = self.m.position()
+    # def mouse(self, vec, f):
+    #     # move mouse
+    #     x,z = self.m.position()
         
-        # print -10 > vec.x
-        # print vec.x > 10
-        # print -10 > vec.z
-        # print vec.z > 10
-        if ( -self.THRESHOLD > vec.x or vec.x > self.THRESHOLD):
-            x += math.copysign(math.fabs(vec.x) - self.THRESHOLD, vec.x)/self.FACTOR
-        if ( -self.THRESHOLD > vec.z or vec.z > self.THRESHOLD):
-            z += math.copysign(math.fabs(vec.z) - self.THRESHOLD, vec.z)/self.FACTOR
-        x_dim, y_dim = self.m.screen_size()
-        if(x < 0): x = 0
-        if(z < 0): z = 0
-        if(x > x_dim): x = x_dim
-        if(z > y_dim): z = y_dim
-        self.m.move(int(x),int(z)) 
-        if f.type == Leap.Finger.TYPE_INDEX:
-            vec = f.tip_position
+    #     # print -10 > vec.x
+    #     # print vec.x > 10
+    #     # print -10 > vec.z
+    #     # print vec.z > 10
+    #     if ( -self.THRESHOLD > vec.x or vec.x > self.THRESHOLD):
+    #         x += math.copysign(math.fabs(vec.x) - self.THRESHOLD, vec.x)/self.FACTOR
+    #     if ( -self.THRESHOLD > vec.z or vec.z > self.THRESHOLD):
+    #         z += math.copysign(math.fabs(vec.z) - self.THRESHOLD, vec.z)/self.FACTOR
+    #     x_dim, y_dim = self.m.screen_size()
+    #     if(x < 0): x = 0
+    #     if(z < 0): z = 0
+    #     if(x > x_dim): x = x_dim
+    #     if(z > y_dim): z = y_dim
+    #     self.m.move(int(x),int(z)) 
+    #     if f.type == Leap.Finger.TYPE_INDEX:
+    #         vec = f.tip_position
         
     def point(self, vec):
         x_cur, y_cur = self.m.position()
                 
-        if (vec.x < 150 or vec.x > -150):
-            x  = (vec.x + 150) * (self.x_res / 300)
-            x_move = x - x_cur
-        if (vec.y < 250 or vec.y > 50):
-            y = (250 - vec.y) * (self.y_res / 200)
-            y_move = y - y_cur
-        
-        if (x_move and y_move):
-            self.m.move(int(x_move),int(y_move))        
+        #if (vec.x < 150 or vec.x > -150):
+        x  = (vec.x + 150) * (self.x_res / 300)
+        x_move = int(x)#  - x_cur
+        #if (vec.y < 250 or vec.y > 50):
+        y = (250 - vec.y) * (self.y_res / 200)
+        y_move = int(y)# - y_cur
+        print "x_cur:  {0} x_move: {1} y_cur: {2} y_move: {3}".format(x_cur, x_move, y_cur, y_move)
+        self.m.move(x_move, y_move)
                  
     def click(self, vec):
         x, z = self.m.position()
