@@ -49,14 +49,16 @@ class Action():
         if f.type == Leap.Finger.TYPE_INDEX:
             vec = f.tip_position
         
-    def point(self, vec, ang):
-        # scaling
-        x = vec.x
-        x += MAXIMUM
-        x = int(x * 6.4) #1920px / 300 units = 6.4
+    def point(self, vec):
+        x  = (vec.x + 150) * (x_res / 300)
+        y = (250 - vec.y) * (y_res / 200)
         
-        y = vec.y
-        y = int(y) # add multiplier for 1080px
+        x_cur = self.m.position().x
+        y_cur = self.m.position().y
+        
+        x_move = x - x_cur
+        y_move = y - y_cur
+        self.m.move(x_move,y_move)        
                  
     def click(self, vec):
         x, z = self.m.position()
