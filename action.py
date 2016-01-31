@@ -21,8 +21,7 @@ class Action():
 
     def __init__(self, c):
        self.controller = c
-       self.x_res = GetSystemMetrics(0)
-       self.y_res = GetSystemMetrics(1)
+       self.x_res, self.y_res = self.m.screensize()       
        
     def check(self, vec):
         x = math.fabs(vec.x)
@@ -55,14 +54,17 @@ class Action():
             vec = f.tip_position
         
     def point(self, vec):
-        x  = (vec.x + 150) * (self.x_res / 300)
-        y = (250 - vec.y) * (self.y_res / 200)
-        
         x_cur, y_cur = self.m.position()
+                
+        if (vec.x < 150 or vec.x > -150):
+            x  = (vec.x + 150) * (self.x_res / 300)
+            x_move = x - x_cur
+        if (vec.y < 250 or vec.y > 50):
+            y = (250 - vec.y) * (self.y_res / 200)
+            y_move = y - y_cur
         
-        x_move = x - x_cur
-        y_move = y - y_cur
-        self.m.move(int(x_move),int(y_move))        
+        if (x_move and y_move):
+            self.m.move(int(x_move),int(y_move))        
                  
     def click(self, vec):
         x, z = self.m.position()
